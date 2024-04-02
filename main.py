@@ -61,9 +61,25 @@ class SecureCreditCard(CreditCard):
             return False
 
 
+class Spa(Reservation):
+    def reserve_spa(self, spa_reservation):
+        if spa_reservation == "yes":
+            content = f"""
+            Thank you for your reservation!
+            Here are your SPA reservation:
+            Name: {self.customer_name}
+            Hotel name: {self.hotel.name}
+            """
+            return content
+        else:
+            return "Enjoy your stay"
+                
+
+
 print(df)
 hotel_id = input("Enter the id of the hotel:")
 hotel = Hotel(hotel_id)
+
 
 if hotel.available():
     credit_card = SecureCreditCard(number="1234")
@@ -73,6 +89,9 @@ if hotel.available():
             name = input("Enter your name:")
             reservation = Reservation(customer_name= name, hotel_object= hotel)
             print(reservation.generate())
+            spa = Spa(customer_name = name, hotel_object= hotel)
+            spa_reservation = input("Would you like to reserve a place in our spa?: ")
+            print(spa.reserve_spa(spa_reservation))
         else: 
             print("Credit card authentication failed")
     else:
